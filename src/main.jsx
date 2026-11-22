@@ -15,10 +15,20 @@ const services = [
 const brands = [
  ['Oracom','Web & app development','OW'],['Orawebhost','Domains & hosting','OH'],['Oramobile','Mobile communication','OM'],['OraDMT','Digital skills & training','DT'],['OraDMA','Digital marketing','DM'],['OraMedia','Photography & video','MD'],['Mybigorder','E-commerce marketplace','MB'],['Palscity','Social networking & gigs','PC'],['DFTNews','News, podcast & radio','DF'],['KEOnline','Search & business directory','KE'],['ODS Chap Chap','On-demand services','ODS'],['Palscity Sacco','Digital community finance','PS'],['Palscity Foundation','Community impact','PF'],['My Leader Kenya','Civic information','ML'],['Digitally Fit Awards','Recognition & excellence','DFA'],['CEOs Networking Tours','Business networking','CEO'],['ODSAI Tech','AI-powered innovation','AI'],['ODSERP','Business management','ERP'],['ODSALMA','Alumni & group platforms','AL'],['ODSVIRAL','Social media automation','VR'],['Wellnia','Wellness technology','WE']
 ];
+const footprintCountries = [
+  { name: 'Kenya', x: 76.2, y: 49.3 },
+  { name: 'Uganda', x: 69.0, y: 46.5 },
+  { name: 'Tanzania', x: 73.5, y: 59.0 },
+  { name: 'Rwanda', x: 64.0, y: 50.5 },
+  { name: 'Burundi', x: 68.0, y: 55.5 },
+  { name: 'Somalia', x: 87.0, y: 42.0 },
+  { name: 'DR Congo', x: 56.5, y: 55.0 },
+  { name: 'South Sudan', x: 65.5, y: 40.5 },
+];
 const reveal={hidden:{opacity:0,y:22},visible:{opacity:1,y:0,transition:{duration:.6,ease:[.22,1,.36,1]}}};
 function InView({children,delay=0,className=''}){return <motion.div className={className} variants={reveal} initial="hidden" whileInView="visible" viewport={{once:true,amount:.12}} transition={{delay}}>{children}</motion.div>}
 function App(){
- const [open,setOpen]=useState(false); const close=()=>setOpen(false);
+ const [open,setOpen]=useState(false); const [activeCountry,setActiveCountry]=useState(''); const close=()=>setOpen(false);
  const nav=[['Services','#services'],['Our ecosystem','#ecosystem'],['About us','#about'],['Our reach','#reach']];
  return <>
   <div className="announcement"><i/>Building the next generation of African digital solutions<a href="#about">Discover Oracom <ArrowUpRight size={13}/></a></div>
@@ -30,7 +40,29 @@ function App(){
    <section className="section" id="services"><div className="section-heading"><InView><div className="eyebrow"><b/>What we do</div><h2>Everything you need<br/>to <em>move forward.</em></h2></InView><InView delay={.12}><p>From your first digital step to your next big leap, our connected capabilities bring the right expertise together under one roof.</p><a className="arrow-link" href="https://oracomgroup.com/our-services/" target="_blank" rel="noreferrer">Explore all services <ArrowUpRight size={16}/></a></InView></div><div className="service-grid">{services.map((s,i)=><InView key={s.n} delay={i*.04}><article className="service-card"><div className="service-top"><span className="service-icon"><s.icon size={21}/></span><span className="service-number">{s.n}</span></div><h3>{s.title}</h3><p>{s.text}</p><a href="#contact" aria-label={'Enquire about '+s.title}><ArrowUpRight size={18}/></a></article></InView>)}</div></section>
    <section className="about-section" id="about"><div className="about-image"><div className="image-backdrop"/><img src="https://images.pexels.com/photos/30689114/pexels-photo-30689114.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Business professionals collaborating during a meeting in Lagos, Nigeria" loading="lazy"/><div className="image-caption"><i/>PEOPLE. IDEAS. PROGRESS.</div><div className="floating-note"><Sparkles size={18}/><span>One ecosystem.<br/><strong>Infinite potential.</strong></span></div></div><div className="about-copy"><InView><div className="eyebrow"><b/>Who we are</div><h2>Big ideas work<br/>better <em>together.</em></h2><p className="lead">Oracom Group is a technology-driven ecosystem built to make digital opportunity more accessible.</p><p>Founded in Nairobi in 2010, we have grown from humble beginnings into a group of specialised brands working across technology, communication, commerce, media, learning and community impact.</p><p>Our strength is in how our capabilities connect — giving people and organisations room to imagine, build and grow.</p><a className="button button-dark" href="https://oracomgroup.com/who-are-we/" target="_blank" rel="noreferrer">Discover our story <ArrowUpRight size={16}/></a></InView></div></section>
    <section className="ecosystem-section" id="ecosystem"><div className="ecosystem-head"><InView><div className="eyebrow light"><b/>The Oracom ecosystem</div><h2>21 brands.<br/><em>One bigger picture.</em></h2></InView><InView delay={.12}><p>Different specialities. Shared ambition. Explore the brands creating solutions across our ecosystem.</p></InView></div><div className="brand-grid">{brands.map(([name,desc,mono],i)=><InView key={name} delay={(i%5)*.025}><a className="brand-card" href="https://oracomgroup.com/" target="_blank" rel="noreferrer"><span className="brand-monogram">{mono}</span><span className="brand-card-copy"><strong>{name}</strong><small>{desc}</small></span><ArrowUpRight className="brand-arrow" size={17}/></a></InView>)}</div><div className="ecosystem-footer"><span>ONE ROOF. MANY WAYS TO MAKE AN IMPACT.</span><a href="https://oracomgroup.com/our-services/" target="_blank" rel="noreferrer">Explore the ecosystem <ArrowUpRight size={16}/></a></div></section>
-   <section className="reach-section" id="reach"><div className="reach-copy"><InView><div className="eyebrow"><b/>Our footprint</div><h2>Rooted in East Africa.<br/><em>Ready for the world.</em></h2><p>Our network spans eight East African countries, bringing digital services and opportunities closer to the people and businesses we serve.</p><div className="country-list">{['Kenya','Uganda','Tanzania','Rwanda','Burundi','Somalia','DR Congo','South Sudan'].map(c=><span key={c}><CheckCircle2 size={14}/>{c}</span>)}</div></InView></div></section>
+   <section className="reach-section" id="reach" style={{'--world-map-url': `url("${import.meta.env.BASE_URL}images/world-watermark.svg")`}}>
+    <div className="reach-copy">
+     <InView>
+      <div className="eyebrow"><b/>Our footprint</div>
+      <h2>Rooted in East Africa.<br/><em>Ready for the world.</em></h2>
+      <p>Our network spans eight East African countries, bringing digital services and opportunities closer to the people and businesses we serve.</p>
+      <div className="country-list" aria-label="Countries in our regional footprint">
+       {footprintCountries.map((country,index)=><button type="button" key={country.name} className={activeCountry===country.name?'country-item is-active':'country-item'} onMouseEnter={()=>setActiveCountry(country.name)} onMouseLeave={()=>setActiveCountry('')} onFocus={()=>setActiveCountry(country.name)} onBlur={()=>setActiveCountry('')} onClick={()=>setActiveCountry(activeCountry===country.name?'':country.name)} aria-pressed={activeCountry===country.name}>
+        <span className="country-index">0{index+1}</span><span className="country-name">{country.name}</span><CheckCircle2 size={15}/>
+       </button>)}
+      </div>
+      <div className="reach-legend"><span/><small>ORACOM'S EAST AFRICAN FOOTPRINT</small></div>
+     </InView>
+    </div>
+    <div className="reach-map-wrap" aria-label="Map of Africa showing the eight listed countries">
+     <div className="map-kicker"><span>REGIONAL PRESENCE</span><span>01 — 08</span></div>
+     <div className="africa-map">
+      <img src={`${import.meta.env.BASE_URL}images/africa-map.svg`} alt="Map of Africa with national boundaries" loading="lazy" />
+      {footprintCountries.map((country,index)=><button type="button" key={country.name} className={`map-marker${activeCountry===country.name?' is-active':''}`} style={{left:`${country.x}%`,top:`${country.y}%`}} onMouseEnter={()=>setActiveCountry(country.name)} onMouseLeave={()=>setActiveCountry('')} onFocus={()=>setActiveCountry(country.name)} onBlur={()=>setActiveCountry('')} onClick={()=>setActiveCountry(activeCountry===country.name?'':country.name)} aria-label={country.name} title={country.name}><span>{String(index+1).padStart(2,'0')}</span></button>)}
+     </div>
+     <div className="map-caption"><span className="map-caption-dot"/>EAST AFRICA <span className="map-caption-line"/> <span>AFRICA</span></div>
+    </div>
+   </section>
    <section className="quote-band"><div className="quote-mark">“</div><p>We believe the future belongs to those who <em>build it together.</em></p><span>THE ORACOM GROUP MINDSET</span></section>
    <section className="contact-section" id="contact">
           <div className="contact-glow"/>
