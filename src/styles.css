@@ -23,3 +23,28 @@
 @media (prefers-reduced-motion: reduce) {
   .about-image img, .contact-photo img { animation: none; }
 }
+
+/* Official Oracom logo lockup */
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  padding: 7px 10px;
+  background: #071326;
+  border-radius: 4px;
+}
+.brand-logo img {
+  display: block;
+  width: 145px;
+  height: auto;
+  max-height: 34px;
+  object-fit: contain;
+}
+.footer-brand.brand-logo {
+  background: #0b1c34;
+}
+@media (max-width: 700px) {
+  .brand-logo { padding: 6px 8px; }
+  .brand-logo img { width: 128px; max-height: 30px; }
+}
